@@ -1,7 +1,9 @@
-name: CI
+name: HTML5 Lint
 
 on:
   push:
+    branches: [ master ]
+  pull_request:
     branches: [ master ]
 
 jobs:
@@ -11,15 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Set up Ruby
-      uses: actions/setup-ruby@v1
+    - name: Run HTML5 Validator
+      uses: validator/validator-action@v1
       with:
-        ruby-version: '2.7'
-
-    - name: Install dependencies
-      run: |
-        gem install html-proofer
-
-    - name: Check HTML
-      run: |
-        htmlproofer ./ --allow-hash-href  --checks-to-ignore LinkCheck
+        file: './**/*.html'
